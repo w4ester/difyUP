@@ -495,7 +495,7 @@ class ModelProviderService:
             'Content-Type': 'application/json',
             'Authorization': f"Bearer {api_key}"
         }
-        response = requests.post(api_url, headers=headers, json={'workspace_id': tenant_id, 'provider_name': provider})
+        response = requests.post(api_url, headers=headers, json={'workspace_id': tenant_id, 'provider_name': provider}, timeout=60)
         if not response.ok:
             logger.error(f"Request FREE QUOTA APPLY SERVER Error: {response.status_code} ")
             raise ValueError(f"Error: {response.status_code} ")
@@ -531,7 +531,7 @@ class ModelProviderService:
         if token:
             json_data['token'] = token
         response = requests.post(api_url, headers=headers,
-                                 json=json_data)
+                                 json=json_data, timeout=60)
         if not response.ok:
             logger.error(f"Request FREE QUOTA APPLY SERVER Error: {response.status_code} ")
             raise ValueError(f"Error: {response.status_code} ")

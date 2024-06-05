@@ -56,7 +56,7 @@ def delete(url, *args, **kwargs):
                 kwargs['timeout'] = (timeout[0], timeout[1])
         else:
             kwargs['timeout'] = (timeout, timeout)
-    return _delete(url=url, *args, proxies=requests_proxies, **kwargs)
+    return _delete(url=url, *args, proxies=requests_proxies, **kwargs, timeout=60)
 
 def head(url, *args, **kwargs):
     return _head(url=url, *args, proxies=httpx_proxies, **kwargs)

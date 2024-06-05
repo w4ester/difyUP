@@ -57,7 +57,7 @@ class SearXNGSearchTool(BuiltinTool):
             "q": query, 
             "format": "json", 
             "categories": self.SEARCH_TYPE[search_type]
-        })
+        }, timeout=60)
 
         if response.status_code != 200:
             raise Exception(f'Error {response.status_code}: {response.text}')
