@@ -7,7 +7,7 @@ from time import sleep, time
 from typing import Any
 
 from httpx import get, post
-from requests import get as requests_get
+from security.safe_requests import get as requests_get
 from yarl import URL
 
 from core.tools.entities.common_entities import I18nObject

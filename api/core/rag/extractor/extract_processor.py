@@ -3,8 +3,6 @@ import tempfile
 from pathlib import Path
 from typing import Union
 from urllib.parse import unquote
-
-import requests
 from flask import current_app
 
 from core.rag.extractor.csv_extractor import CSVExtractor
@@ -29,6 +27,7 @@ from core.rag.extractor.word_extractor import WordExtractor
 from core.rag.models.document import Document
 from extensions.ext_storage import storage
 from models.model import UploadFile
+from security import safe_requests
 
 SUPPORT_URL_CONTENT_TYPES = ['application/pdf', 'text/plain']
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -51,7 +50,7 @@ class ExtractProcessor:
 
     @classmethod
     def load_from_url(cls, url: str, return_text: bool = False) -> Union[list[Document], str]:
-        response = requests.get(url, headers={
+        response = safe_requests.get(url, headers={
             "User-Agent": USER_AGENT
         })
 

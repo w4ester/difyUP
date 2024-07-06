@@ -1,7 +1,7 @@
 from typing import Any, Union
 from urllib.parse import quote
 
-from requests import get
+from security.safe_requests import get
 
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool

@@ -5,7 +5,7 @@ from json import dumps as json_dumps
 from json import loads as json_loads
 from json.decoder import JSONDecodeError
 
-from requests import get
+from security.safe_requests import get
 from yaml import YAMLError, safe_load
 
 from core.tools.entities.common_entities import I18nObject
