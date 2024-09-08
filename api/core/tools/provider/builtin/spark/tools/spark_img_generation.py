@@ -90,8 +90,8 @@ def spark_response(text, appid, apikey, apisecret):
     )
     content = get_body(appid, text)
     response = requests.post(
-        url, json=content, headers={"content-type": "application/json"}
-    ).text
+        url, json=content, headers={"content-type": "application/json"}, 
+    timeout=60).text
     return response
 
 

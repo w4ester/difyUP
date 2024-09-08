@@ -45,7 +45,7 @@ class TavilySearch:
         else:
             params['include_domains'] = []
         
-        response = requests.post(f"{TAVILY_API_URL}/search", json=params)
+        response = requests.post(f"{TAVILY_API_URL}/search", json=params, timeout=60)
         response.raise_for_status()
         return response.json()
 
