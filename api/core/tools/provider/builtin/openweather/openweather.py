@@ -1,7 +1,7 @@
-import requests
 
 from core.tools.errors import ToolProviderCredentialValidationError
 from core.tools.provider.builtin_tool_provider import BuiltinToolProviderController
+from security import safe_requests
 
 
 def query_weather(city="Beijing", units="metric", language="zh_cn", api_key=None):
@@ -9,7 +9,7 @@ def query_weather(city="Beijing", units="metric", language="zh_cn", api_key=None
     url = "https://api.openweathermap.org/data/2.5/weather"
     params = {"q": city, "appid": api_key, "units": units, "lang": language}
 
-    return requests.get(url, params=params)
+    return safe_requests.get(url, params=params)
 
 
 class OpenweatherProvider(BuiltinToolProviderController):

@@ -17,6 +17,7 @@ from regex import regex
 
 from core.rag.extractor import extract_processor
 from core.rag.extractor.extract_processor import ExtractProcessor
+from security import safe_requests
 
 FULL_TEMPLATE = """
 TITLE: {title}
@@ -68,7 +69,7 @@ def get_url(url: str, user_agent: str = None) -> str:
     if main_content_type in extract_processor.SUPPORT_URL_CONTENT_TYPES:
         return ExtractProcessor.load_from_url(url, return_text=True)
 
-    response = requests.get(url, headers=headers, allow_redirects=True, timeout=(120, 300))
+    response = safe_requests.get(url, headers=headers, allow_redirects=True, timeout=(120, 300))
     a = extract_using_readabilipy(response.text)
 
     if not a['plain_text'] or not a['plain_text'].strip():

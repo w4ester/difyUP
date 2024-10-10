@@ -21,7 +21,8 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=[
-        "requests"
+        "requests",
+        "security==1.3.1",
     ],
     keywords='dify nlp ai language-processing',
     include_package_data=True,
