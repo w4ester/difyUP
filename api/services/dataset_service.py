@@ -1,7 +1,6 @@
 import datetime
 import json
 import logging
-import random
 import time
 import uuid
 from typing import Optional, cast
@@ -49,6 +48,7 @@ from tasks.document_indexing_update_task import document_indexing_update_task
 from tasks.duplicate_document_indexing_task import duplicate_document_indexing_task
 from tasks.recover_document_indexing_task import recover_document_indexing_task
 from tasks.retry_document_indexing_task import retry_document_indexing_task
+import secrets
 
 
 class DatasetService:
@@ -568,7 +568,7 @@ class DocumentService:
                         'retrieval_model') else default_retrieval_model
 
         documents = []
-        batch = time.strftime('%Y%m%d%H%M%S') + str(random.randint(100000, 999999))
+        batch = time.strftime('%Y%m%d%H%M%S') + str(secrets.SystemRandom().randint(100000, 999999))
         if document_data.get("original_document_id"):
             document = DocumentService.update_document_with_dataset_id(dataset, document_data, account)
             documents.append(document)
