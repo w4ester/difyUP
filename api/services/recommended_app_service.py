@@ -2,14 +2,13 @@ import json
 import logging
 from os import path
 from typing import Optional
-
-import requests
 from flask import current_app
 
 from constants.languages import languages
 from extensions.ext_database import db
 from models.model import App, RecommendedApp
 from services.app_service import AppService
+from security import safe_requests
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +105,7 @@ class RecommendedAppService:
         """
         domain = current_app.config.get('HOSTED_FETCH_APP_TEMPLATES_REMOTE_DOMAIN', 'https://tmpl.dify.ai')
         url = f'{domain}/apps?language={language}'
-        response = requests.get(url, timeout=(3, 10))
+        response = safe_requests.get(url, timeout=(3, 10))
         if response.status_code != 200:
             raise ValueError(f'fetch recommended apps failed, status code: {response.status_code}')
 
@@ -154,7 +153,7 @@ class RecommendedAppService:
         """
         domain = current_app.config.get('HOSTED_FETCH_APP_TEMPLATES_REMOTE_DOMAIN', 'https://tmpl.dify.ai')
         url = f'{domain}/apps/{app_id}'
-        response = requests.get(url, timeout=(3, 10))
+        response = safe_requests.get(url, timeout=(3, 10))
         if response.status_code != 200:
             return None
 
