@@ -58,7 +58,7 @@ class JinaTextEmbeddingModel(TextEmbeddingModel):
         }
 
         try:
-            response = post(url, headers=headers, data=dumps(data))
+            response = post(url, headers=headers, data=dumps(data), timeout=60)
         except Exception as e:
             raise InvokeConnectionError(str(e))
         

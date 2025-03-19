@@ -41,7 +41,7 @@ class BaiduAccessToken:
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-            )
+            timeout=60)
         except Exception as e:
             raise InvalidAuthenticationError(f'Failed to get access token from Baidu: {e}')
 
@@ -178,7 +178,7 @@ class ErnieBotModel:
             'Content-Type': 'application/json',
         }
 
-        resp = post(url=url, data=dumps(body), headers=headers, stream=stream)
+        resp = post(url=url, data=dumps(body), headers=headers, stream=stream, timeout=60)
 
         if resp.status_code != 200:
             raise InternalServerError(f'Failed to invoke ernie bot: {resp.text}')

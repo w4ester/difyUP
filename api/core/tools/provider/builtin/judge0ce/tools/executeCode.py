@@ -45,7 +45,7 @@ class ExecuteCodeTool(BuiltinTool):
             "X-RapidAPI-Key": api_key
         }
         
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=60)
         if response.status_code == 200:
             result = response.json()
             return self.create_text_message(text=f"stdout: {result.get('stdout', '')}\n"

@@ -36,7 +36,7 @@ class OpenweatherTool(BuiltinTool):
                 "units": units,
                 "lang": lang,
             }
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=params, timeout=60)
 
             if response.status_code == 200:
 

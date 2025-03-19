@@ -44,7 +44,7 @@ class NotionOAuth(OAuthDataSource):
         }
         headers = {'Accept': 'application/json'}
         auth = (self.client_id, self.client_secret)
-        response = requests.post(self._TOKEN_URL, data=data, auth=auth, headers=headers)
+        response = requests.post(self._TOKEN_URL, data=data, auth=auth, headers=headers, timeout=60)
 
         response_json = response.json()
         access_token = response_json.get('access_token')
@@ -244,7 +244,7 @@ class NotionOAuth(OAuthDataSource):
             'Authorization': f"Bearer {access_token}",
             'Notion-Version': '2022-06-28',
         }
-        response = requests.post(url=self._NOTION_PAGE_SEARCH, json=data, headers=headers)
+        response = requests.post(url=self._NOTION_PAGE_SEARCH, json=data, headers=headers, timeout=60)
         response_json = response.json()
         if 'results' in response_json:
             results = response_json['results']
@@ -257,7 +257,7 @@ class NotionOAuth(OAuthDataSource):
             'Authorization': f"Bearer {access_token}",
             'Notion-Version': '2022-06-28',
         }
-        response = requests.get(url=f'{self._NOTION_BLOCK_SEARCH}/{block_id}', headers=headers)
+        response = requests.get(url=f'{self._NOTION_BLOCK_SEARCH}/{block_id}', headers=headers, timeout=60)
         response_json = response.json()
         parent = response_json['parent']
         parent_type = parent['type']
@@ -270,7 +270,7 @@ class NotionOAuth(OAuthDataSource):
             'Authorization': f"Bearer {access_token}",
             'Notion-Version': '2022-06-28',
         }
-        response = requests.get(url=self._NOTION_BOT_USER, headers=headers)
+        response = requests.get(url=self._NOTION_BOT_USER, headers=headers, timeout=60)
         response_json = response.json()
         if 'object' in response_json and response_json['object'] == 'user':
             user_type = response_json['type']
@@ -291,7 +291,7 @@ class NotionOAuth(OAuthDataSource):
             'Authorization': f"Bearer {access_token}",
             'Notion-Version': '2022-06-28',
         }
-        response = requests.post(url=self._NOTION_PAGE_SEARCH, json=data, headers=headers)
+        response = requests.post(url=self._NOTION_PAGE_SEARCH, json=data, headers=headers, timeout=60)
         response_json = response.json()
         if 'results' in response_json:
             results = response_json['results']
