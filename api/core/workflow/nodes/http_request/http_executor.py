@@ -1,7 +1,6 @@
 import json
 import os
 from copy import deepcopy
-from random import randint
 from typing import Any, Optional, Union
 from urllib.parse import urlencode
 
@@ -13,6 +12,7 @@ from core.workflow.entities.variable_entities import VariableSelector
 from core.workflow.entities.variable_pool import ValueType, VariablePool
 from core.workflow.nodes.http_request.entities import HttpRequestNodeData
 from core.workflow.utils.variable_template_parser import VariableTemplateParser
+import secrets
 
 MAX_BINARY_SIZE = int(os.environ.get('HTTP_REQUEST_NODE_MAX_BINARY_SIZE', 1024 * 1024 * 10))  # 10MB
 READABLE_MAX_BINARY_SIZE = f'{MAX_BINARY_SIZE / 1024 / 1024:.2f}MB'
@@ -204,7 +204,7 @@ class HttpExecutor:
                     self.files = {
                         k: ('', v) for k, v in body.items()
                     }
-                    random_str = lambda n: ''.join([chr(randint(97, 122)) for _ in range(n)])
+                    random_str = lambda n: ''.join([chr(secrets.SystemRandom().randint(97, 122)) for _ in range(n)])
                     self.boundary = f'----WebKitFormBoundary{random_str(16)}'
 
                     self.headers['Content-Type'] = f'multipart/form-data; boundary={self.boundary}'
