@@ -1,10 +1,9 @@
 import json
 from typing import Any
 
-import requests
-
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool
+from security import safe_requests
 
 
 class SearXNGSearchResults(dict):
@@ -53,7 +52,7 @@ class SearXNGSearchTool(BuiltinTool):
         if search_type not in self.SEARCH_TYPE.keys():
             search_type= "page"
 
-        response = requests.get(host, params={
+        response = safe_requests.get(host, params={
             "q": query, 
             "format": "json", 
             "categories": self.SEARCH_TYPE[search_type]

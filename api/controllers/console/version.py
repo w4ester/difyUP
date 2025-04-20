@@ -1,12 +1,11 @@
 
 import json
 import logging
-
-import requests
 from flask import current_app
 from flask_restful import Resource, reqparse
 
 from . import api
+from security import safe_requests
 
 
 class VersionApi(Resource):
@@ -26,7 +25,7 @@ class VersionApi(Resource):
             }
 
         try:
-            response = requests.get(check_update_url, {
+            response = safe_requests.get(check_update_url, {
                 'current_version': args.get('current_version')
             })
         except Exception as error:
