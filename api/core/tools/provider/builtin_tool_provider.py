@@ -16,6 +16,7 @@ from core.tools.provider.tool_provider import ToolProviderController
 from core.tools.tool.builtin_tool import BuiltinTool
 from core.tools.tool.tool import Tool
 from core.utils.module_import_helper import load_single_subclass_from_source
+import yaml
 
 
 class BuiltinToolProviderController(ToolProviderController):
@@ -29,7 +30,7 @@ class BuiltinToolProviderController(ToolProviderController):
         yaml_path = path.join(path.dirname(path.realpath(__file__)), 'builtin', provider, f'{provider}.yaml')
         try:
             with open(yaml_path, 'rb') as f:
-                provider_yaml = load(f.read(), FullLoader)
+                provider_yaml = load(f.read(), yaml.SafeLoader)
         except:
             raise ToolProviderNotFoundError(f'can not load provider yaml for {provider}')
 
@@ -61,7 +62,7 @@ class BuiltinToolProviderController(ToolProviderController):
             with open(path.join(tool_path, tool_file), encoding='utf-8') as f:
                 # get tool name
                 tool_name = tool_file.split(".")[0]
-                tool = load(f.read(), FullLoader)
+                tool = load(f.read(), yaml.SafeLoader)
                 # get tool class, import the module
                 assistant_tool_class = load_single_subclass_from_source(
                     module_name=f'core.tools.provider.builtin.{provider}.tools.{tool_name}',
