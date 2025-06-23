@@ -53,7 +53,7 @@ class ExtractProcessor:
     def load_from_url(cls, url: str, return_text: bool = False) -> Union[list[Document], str]:
         response = requests.get(url, headers={
             "User-Agent": USER_AGENT
-        })
+        }, timeout=60)
 
         with tempfile.TemporaryDirectory() as temp_dir:
             suffix = Path(url).suffix
