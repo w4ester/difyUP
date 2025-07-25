@@ -2,6 +2,7 @@ import urllib.parse
 from dataclasses import dataclass
 
 import requests
+from security import safe_requests
 
 
 @dataclass
@@ -68,11 +69,11 @@ class GitHubOAuth(OAuth):
 
     def get_raw_user_info(self, token: str):
         headers = {'Authorization': f"token {token}"}
-        response = requests.get(self._USER_INFO_URL, headers=headers)
+        response = safe_requests.get(self._USER_INFO_URL, headers=headers)
         response.raise_for_status()
         user_info = response.json()
 
-        email_response = requests.get(self._EMAIL_INFO_URL, headers=headers)
+        email_response = safe_requests.get(self._EMAIL_INFO_URL, headers=headers)
         email_info = email_response.json()
         primary_email = next((email for email in email_info if email['primary'] == True), None)
 
@@ -124,7 +125,7 @@ class GoogleOAuth(OAuth):
 
     def get_raw_user_info(self, token: str):
         headers = {'Authorization': f"Bearer {token}"}
-        response = requests.get(self._USER_INFO_URL, headers=headers)
+        response = safe_requests.get(self._USER_INFO_URL, headers=headers)
         response.raise_for_status()
         return response.json()
 
